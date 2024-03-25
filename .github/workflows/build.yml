@@ -1,0 +1,51 @@
+name: build v8+quickjs backend
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag_date:
+        description: 'tag date'     
+        required: true
+        
+env:
+  V8_URL: "https://github.com/puerts/backend-v8/releases/download/V8_9.4.146.24_230822/v8_bin_9.4.146.24.tgz"
+  QJS_URL: "https://github.com/puerts/backend-quickjs/releases/download/QJS_CN_240325/qjs_v8_bin.tgz"
+  
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Release Asset
+        run: |
+          wget -O v8lib.tgz -q ${{env.V8_URL}}
+          wget -O qjslib.tgz -q ${{env.QJS_URL}}
+          tar xvfz v8lib.tgz
+          tar xvfz qjslib.tgz
+          mkdir -p mult/Inc
+          mkdir -p mult/Lib
+          cp -r v8_9.4/Inc mult/Inc/v8
+          cp -r quickjs/Inc mult/Inc/quickjs
+          cp -r v8_9.4/Lib/* mult/Lib/
+          cp -r quickjs/Lib/* mult/Lib/
+          tar cvfz mult_backends.tgz mult
+          
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: MULT_${{ github.event.inputs.tag_date }}
+          release_name: MULT_${{ github.event.inputs.tag_date }}
+          draft: false
+          prerelease: false
+
+      - name: Upload LIBS
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./mult_backends.tgz
+          asset_name: mult_backends.tgz
+          asset_content_type: application/tgz
