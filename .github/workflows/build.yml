@@ -24,9 +24,9 @@ jobs:
           mkdir -p mult/Inc
           mkdir -p mult/Lib
           cp -r v8_9.4/Inc mult/Inc/v8
-          cp -r quickjs/Inc mult/Inc/quickjs
+          cp -r quickjs_ns/Inc mult/Inc/quickjs
           cp -r v8_9.4/Lib/* mult/Lib/
-          cp -r quickjs/Lib/* mult/Lib/
+          cp -r quickjs_ns/Lib/* mult/Lib/
           tar cvfz mult_backends.tgz mult
           
       - name: Create Release
