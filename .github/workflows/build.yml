@@ -23,9 +23,9 @@ jobs:
           tar xvfz qjslib.tgz
           mkdir -p mult/Inc
           mkdir -p mult/Lib
-          cp -r v8_9.4/Inc mult/Inc/v8
+          cp -r v8_9.4.146.24/Inc mult/Inc/v8
           cp -r quickjs_ns/Inc mult/Inc/quickjs
-          cp -r v8_9.4/Lib/* mult/Lib/
+          cp -r v8_9.4.146.24/Lib/* mult/Lib/
           cp -r quickjs_ns/Lib/* mult/Lib/
           tar cvfz mult_backends.tgz mult
           
