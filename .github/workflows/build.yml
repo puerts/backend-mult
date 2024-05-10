@@ -8,7 +8,7 @@ on:
         required: true
         
 env:
-  V8_URL: "https://github.com/puerts/backend-v8/releases/download/V8_9.4.146.24_240430/v8_bin_9.4.146.24.tg"
+  V8_URL: "https://github.com/puerts/backend-v8/releases/download/V8_9.4.146.24_240430/v8_bin_9.4.146.24.tgz"
   QJS_URL: "https://github.com/puerts/backend-quickjs/releases/download/QJS_CN_240424/qjs_v8_bin.tgz"
   
 jobs:
